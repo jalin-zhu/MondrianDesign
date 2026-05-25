@@ -75,6 +75,7 @@
   padding: var(--md-space-sm) var(--md-space-lg);
   font-weight: 700;
   cursor: pointer;
+  border-radius: 0;
 }
 
 .md-button:hover:not(:disabled) {
@@ -106,6 +107,11 @@
   border-color: var(--md-red);
 }
 
+.md-textarea {
+  resize: vertical;
+  min-height: 110px;
+}
+
 .md-choice {
   display: inline-flex;
   align-items: center;
@@ -116,6 +122,42 @@
 
 .md-choice input {
   accent-color: var(--md-black);
+}
+
+.md-switch-wrap {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--md-space-sm);
+}
+
+.md-switch {
+  width: 54px;
+  height: 30px;
+  padding: 2px;
+  background: var(--md-white);
+  display: inline-flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.md-switch:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.md-switch-thumb {
+  width: 22px;
+  height: 22px;
+  background: var(--md-black);
+  transition: transform var(--md-motion-fast) ease;
+}
+
+.md-switch-thumb-on {
+  transform: translateX(24px);
+}
+
+.md-switch-label {
+  font-weight: 600;
 }
 
 .md-tabs {
@@ -174,6 +216,72 @@
   opacity: 0.85;
 }
 
+.md-alert {
+  border: var(--md-border-strong-width) solid var(--md-black);
+  padding: var(--md-space-md);
+  box-shadow: var(--md-shadow-sm);
+}
+
+.md-alert-title {
+  margin: 0 0 var(--md-space-xs);
+  font-weight: 700;
+}
+
+.md-alert-desc {
+  margin: 0;
+}
+
+.md-alert-action {
+  margin-top: var(--md-space-sm);
+}
+
+.md-progress-wrap {
+  display: grid;
+  gap: var(--md-space-xs);
+}
+
+.md-progress {
+  width: 100%;
+  height: 14px;
+  border: var(--md-border-width) solid var(--md-black);
+  background: var(--md-white);
+}
+
+.md-progress-fill {
+  height: 100%;
+}
+
+.md-progress-label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.md-avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: var(--md-border-width) solid var(--md-black);
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.md-avatar-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.md-skeleton {
+  border: var(--md-border-width) solid var(--md-black);
+  background: linear-gradient(90deg, #efefef 25%, #ffffff 50%, #efefef 75%);
+  background-size: 200% 100%;
+  animation: md-shimmer 1.2s linear infinite;
+}
+
+.md-skeleton-circle {
+  border-radius: 50%;
+}
+
 .md-badge {
   display: inline-flex;
   border: var(--md-border-width) solid var(--md-black);
@@ -204,4 +312,13 @@
 
 .md-toast-desc {
   margin: 0;
+}
+
+@keyframes md-shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
 }

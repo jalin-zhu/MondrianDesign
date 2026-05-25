@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import {
+  Alert,
+  Avatar,
   Badge,
   Button,
   Card,
@@ -7,21 +9,26 @@ import {
   Input,
   Modal,
   MondrianProvider,
+  Progress,
   Radio,
+  Skeleton,
   Select,
+  Switch,
   Tabs,
+  Textarea,
   Toast,
 } from 'mondrian-design';
 
 export default function App(): React.JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
+  const [switchOn, setSwitchOn] = useState(true);
 
   return (
     <MondrianProvider>
       <main className="demo-root">
         <h1>MondrianDesign Demo</h1>
-        <p>10 core components in a Mondrian block visual language.</p>
+        <p>16 practical components in a Mondrian block visual language.</p>
 
         <div className="demo-grid">
           <section className="demo-panel">
@@ -39,6 +46,7 @@ export default function App(): React.JSX.Element {
             <h2>Input + Select</h2>
             <div className="demo-row" style={{ flexDirection: 'column' }}>
               <Input placeholder="Search block..." />
+              <Textarea placeholder="Write release notes..." rows={3} />
               <Select defaultValue="blue">
                 <option value="red">Red</option>
                 <option value="yellow">Yellow</option>
@@ -53,6 +61,12 @@ export default function App(): React.JSX.Element {
               <Checkbox label="Enable hard grid lines" defaultChecked />
               <Radio name="layout" label="Asymmetric layout" defaultChecked />
               <Radio name="layout" label="Symmetric layout" />
+              <Switch
+                label={switchOn ? 'Contrast mode on' : 'Contrast mode off'}
+                checked={switchOn}
+                onCheckedChange={setSwitchOn}
+                tone="blue"
+              />
             </div>
           </section>
 
@@ -76,6 +90,9 @@ export default function App(): React.JSX.Element {
             >
               Keep content geometric, high contrast, and grid-driven.
             </Card>
+            <div style={{ marginTop: 12 }}>
+              <Progress value={68} tone="red" />
+            </div>
           </section>
 
           <section className="demo-panel">
@@ -87,6 +104,31 @@ export default function App(): React.JSX.Element {
               <Button tone="blue" onClick={() => setToastOpen(true)}>
                 Show Toast
               </Button>
+            </div>
+          </section>
+
+          <section className="demo-panel">
+            <h2>Alert + Avatar</h2>
+            <div className="demo-row" style={{ alignItems: 'center' }}>
+              <Avatar name="Piet Mondrian" tone="yellow" />
+              <Avatar name="Design Team" tone="blue" />
+            </div>
+            <div style={{ marginTop: 12 }}>
+              <Alert
+                title="Review needed"
+                description="2 new component stories are waiting for QA."
+                tone="yellow"
+                action={<Button tone="black">Open Queue</Button>}
+              />
+            </div>
+          </section>
+
+          <section className="demo-panel">
+            <h2>Skeleton</h2>
+            <div style={{ display: 'grid', gap: 8 }}>
+              <Skeleton height={16} />
+              <Skeleton height={16} width="84%" />
+              <Skeleton width={46} height={46} circle />
             </div>
           </section>
         </div>
@@ -105,4 +147,3 @@ export default function App(): React.JSX.Element {
     </MondrianProvider>
   );
 }
-
