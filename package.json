@@ -1,0 +1,51 @@
+{
+  "name": "mondriandesign-monorepo",
+  "private": true,
+  "version": "0.1.0",
+  "description": "MondrianDesign UI component library monorepo",
+  "license": "MIT",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "build": "npm run build --workspace mondrian-design",
+    "typecheck": "npm run typecheck --workspace mondrian-design",
+    "lint": "eslint . --ext .ts,.tsx",
+    "test": "npm run test --workspace mondrian-design",
+    "demo": "npm run dev --workspace @mondrian/demo",
+    "build:demo": "npm run build --workspace @mondrian/demo",
+    "storybook": "npm run storybook --workspace @mondrian/storybook",
+    "build:storybook": "npm run build-storybook --workspace @mondrian/storybook",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "clean": "rimraf packages/*/dist apps/storybook/storybook-static coverage"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.28.1",
+    "@eslint/js": "^9.15.0",
+    "@rollup/rollup-win32-x64-msvc": "^4.60.4",
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.1.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/jest-axe": "^3.5.9",
+    "@types/node": "^22.10.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.16.0",
+    "@typescript-eslint/parser": "^8.16.0",
+    "eslint": "^9.15.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "globals": "^15.12.0",
+    "jest-axe": "^10.0.0",
+    "jsdom": "^25.0.1",
+    "prettier": "^3.4.1",
+    "rimraf": "^6.0.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2",
+    "vitest": "^2.1.8"
+  }
+}
