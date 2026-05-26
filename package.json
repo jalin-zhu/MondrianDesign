@@ -27,8 +27,6 @@
   "devDependencies": {
     "@changesets/cli": "^2.28.1",
     "@eslint/js": "^9.15.0",
-    "@rolldown/binding-win32-x64-msvc": "^1.0.2",
-    "@rollup/rollup-win32-x64-msvc": "^4.60.4",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.1.0",
     "@testing-library/user-event": "^14.6.1",
@@ -50,6 +48,10 @@
     "tsup": "^8.3.5",
     "typescript": "^5.7.2",
     "vitest": "^4.1.7"
+  },
+  "optionalDependencies": {
+    "@rolldown/binding-win32-x64-msvc": "^1.0.2",
+    "@rollup/rollup-win32-x64-msvc": "^4.60.4"
   },
   "overrides": {
     "uuid": "^11.1.1",
