@@ -17,6 +17,8 @@
     "build:demo": "npm run build --workspace @mondrian/demo",
     "storybook": "npm run storybook --workspace @mondrian/storybook",
     "build:storybook": "npm run build-storybook --workspace @mondrian/storybook",
+    "website": "npm run dev --workspace @mondrian/website",
+    "build:website": "npm run build --workspace @mondrian/website",
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",

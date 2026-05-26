@@ -1,6 +1,8 @@
 # MondrianDesign
 
-MondrianDesign is a React component library inspired by Mondrian color blocks.
+Mondrian-inspired React UI component library. A design system built on bold geometry, primary colors, and thick black borders.
+
+**Website:** [jalin-zhu.github.io/MondrianDesign](https://jalin-zhu.github.io/MondrianDesign/)
 
 ## Components
 
@@ -11,14 +13,26 @@ MondrianDesign is a React component library inspired by Mondrian color blocks.
 
 - `packages/mondrian-design`: publishable npm package
 - `apps/storybook`: component docs and playground
+- `apps/demo`: quick demo application
+- `apps/website`: promotional website
 
 ## Quick Start
 
 ```bash
+# Install dependencies
 npm install
+
+# Build the component library
 npm run build
-npm run storybook
+
+# Run demo app
 npm run demo
+
+# Run Storybook
+npm run storybook
+
+# Run promotional website (dev)
+npm run website
 ```
 
 ## Release
