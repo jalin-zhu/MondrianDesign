@@ -16,3 +16,5 @@ export * from './Tabs';
 export * from './Textarea';
 export * from './Toast';
 export * from './VideoPlayer';
+export * from './MondrianGrid';
+export * from './MondrianCanvas';

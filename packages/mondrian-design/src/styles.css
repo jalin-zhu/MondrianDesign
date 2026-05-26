@@ -460,3 +460,33 @@ select.md-field {
   white-space: nowrap;
   border: 0;
 }
+
+/* ===== Auto-Generated Mondrian Grid ===== */
+
+.md-grid {
+  width: 100%;
+}
+
+.md-grid-cell {
+  border: var(--md-border-width) solid var(--md-black);
+  padding: var(--md-space-md);
+  min-height: 0;
+  transition: transform var(--md-motion-fast) ease;
+}
+
+.md-grid-cell:hover {
+  transform: translate(-1px, -1px);
+}
+
+.md-grid-cell-dominant {
+  border-width: var(--md-border-strong-width);
+  box-shadow: var(--md-shadow-sm);
+}
+
+/* ===== Auto-Generated Mondrian Canvas ===== */
+
+.md-canvas {
+  background: var(--md-canvas);
+  min-height: 100%;
+  padding: var(--md-space-xl);
+}
