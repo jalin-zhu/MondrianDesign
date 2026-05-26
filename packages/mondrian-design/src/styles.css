@@ -94,6 +94,37 @@
 
 .md-button-outlined {
   background: transparent;
+  color: inherit;
+}
+
+.md-button-outlined.md-tone-red {
+  border-color: var(--md-red);
+  color: var(--md-red);
+}
+
+.md-button-outlined.md-tone-yellow {
+  border-color: var(--md-yellow);
+  color: var(--md-yellow);
+}
+
+.md-button-outlined.md-tone-blue {
+  border-color: var(--md-blue);
+  color: var(--md-blue);
+}
+
+.md-button-outlined.md-tone-white {
+  border-color: var(--md-white);
+  color: var(--md-white);
+}
+
+.md-button-outlined.md-tone-black {
+  border-color: var(--md-black);
+  color: var(--md-black);
+}
+
+.md-button-outlined.md-tone-default {
+  border-color: var(--md-black);
+  color: var(--md-black);
 }
 
 .md-field {
@@ -101,6 +132,7 @@
   padding: var(--md-space-sm) var(--md-space-md);
   background: var(--md-white);
   color: var(--md-black);
+  appearance: none;
 }
 
 .md-field-error {
@@ -178,6 +210,11 @@
   padding: var(--md-space-sm) var(--md-space-md);
   font-weight: 700;
   cursor: pointer;
+  transition: background var(--md-motion-fast) ease, transform var(--md-motion-fast) ease;
+}
+
+.md-tab:hover:not(.md-tab-active) {
+  background: #f5f5f5;
 }
 
 .md-tab-active {
@@ -192,6 +229,7 @@
   align-items: center;
   justify-content: center;
   z-index: 50;
+  animation: md-fade-in var(--md-motion-normal) ease;
 }
 
 .md-modal {
@@ -199,6 +237,23 @@
   border: var(--md-border-strong-width) solid var(--md-black);
   width: min(560px, 92vw);
   padding: var(--md-space-lg);
+  animation: md-scale-in var(--md-motion-normal) ease;
+}
+
+.md-modal-title {
+  margin: 0 0 var(--md-space-md);
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.md-modal-body {
+  margin-bottom: var(--md-space-md);
+}
+
+.md-modal-close-area {
+  margin-top: var(--md-space-lg);
+  display: flex;
+  justify-content: flex-end;
 }
 
 .md-card {
@@ -271,9 +326,39 @@
   object-fit: cover;
 }
 
+.md-media {
+  border: var(--md-border-strong-width) solid var(--md-black);
+  padding: var(--md-space-md);
+  margin: 0;
+  box-shadow: var(--md-shadow-sm);
+}
+
+.md-media-title {
+  margin: 0 0 var(--md-space-xs);
+  font-weight: 700;
+}
+
+.md-media-subtitle {
+  margin: 0 0 var(--md-space-sm);
+  font-size: 13px;
+  opacity: 0.8;
+}
+
+.md-media-control {
+  width: 100%;
+  border: var(--md-border-width) solid var(--md-black);
+  background: var(--md-white);
+  max-width: 100%;
+}
+
+.md-media-video {
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+}
+
 .md-skeleton {
   border: var(--md-border-width) solid var(--md-black);
-  background: linear-gradient(90deg, #efefef 25%, #ffffff 50%, #efefef 75%);
+  background: linear-gradient(90deg, var(--md-canvas) 25%, var(--md-white) 50%, var(--md-canvas) 75%);
   background-size: 200% 100%;
   animation: md-shimmer 1.2s linear infinite;
 }
@@ -303,6 +388,7 @@
   border: var(--md-border-strong-width) solid var(--md-black);
   padding: var(--md-space-md);
   box-shadow: var(--md-shadow-md);
+  animation: md-slide-up var(--md-motion-normal) ease;
 }
 
 .md-toast-title {
@@ -321,4 +407,56 @@
   100% {
     background-position: -200% 0;
   }
+}
+
+@keyframes md-fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes md-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes md-slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Select dropdown arrow */
+select.md-field {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23111111' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right var(--md-space-sm) center;
+  padding-right: calc(var(--md-space-md) + 12px + var(--md-space-sm));
+}
+
+/* Screen-reader-only utility */
+.md-sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

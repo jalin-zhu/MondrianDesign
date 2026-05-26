@@ -33,6 +33,7 @@ export function Progress({
         aria-valuemin={0}
         aria-valuemax={safeMax}
         aria-valuenow={safeValue}
+        aria-valuetext={`${Math.round(percent)}%`}
       >
         <div className={cx('md-progress-fill', `md-tone-${tone}`)} style={{ width: `${percent}%` }} />
       </div>

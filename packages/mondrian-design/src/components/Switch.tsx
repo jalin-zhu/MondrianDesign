@@ -1,4 +1,4 @@
-import React, { useId, useState } from 'react';
+import React, { useCallback, useId, useState } from 'react';
 import type { ComponentTone } from '../types';
 import { cx } from '../utils';
 
@@ -24,7 +24,7 @@ export function Switch({
   const isChecked = checked ?? innerChecked;
   const id = useId();
 
-  const toggle = (): void => {
+  const toggle = useCallback((): void => {
     if (disabled) {
       return;
     }
@@ -33,7 +33,7 @@ export function Switch({
       setInnerChecked(next);
     }
     onCheckedChange?.(next);
-  };
+  }, [disabled, isChecked, checked, onCheckedChange]);
 
   return (
     <div className={cx('md-switch-wrap', className)}>

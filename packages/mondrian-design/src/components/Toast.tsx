@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import type { ComponentTone } from '../types';
 import { cx } from '../utils';
 
@@ -23,19 +23,33 @@ export function Toast({
 }: ToastProps): React.JSX.Element | null {
   const [internalOpen, setInternalOpen] = useState(defaultOpen);
   const isOpen = open ?? internalOpen;
+  const timerRef = useRef<number | null>(null);
+
+  const handleClose = useCallback((): void => {
+    if (open === undefined) {
+      setInternalOpen(false);
+    }
+    onOpenChange?.(false);
+  }, [open, onOpenChange]);
 
   useEffect(() => {
     if (!isOpen) {
       return;
     }
-    const id = window.setTimeout(() => {
-      if (open === undefined) {
-        setInternalOpen(false);
-      }
-      onOpenChange?.(false);
+    // Clear any existing timer before setting a new one
+    if (timerRef.current !== null) {
+      window.clearTimeout(timerRef.current);
+    }
+    timerRef.current = window.setTimeout(() => {
+      handleClose();
     }, duration);
-    return () => window.clearTimeout(id);
-  }, [duration, isOpen, onOpenChange, open]);
+    return () => {
+      if (timerRef.current !== null) {
+        window.clearTimeout(timerRef.current);
+        timerRef.current = null;
+      }
+    };
+  }, [duration, isOpen, handleClose]);
 
   if (!isOpen) {
     return null;

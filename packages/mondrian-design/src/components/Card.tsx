@@ -20,7 +20,7 @@ export function Card({
     <article className={cx('md-card', `md-tone-${tone}`, className)} {...props}>
       {title ? <h3 className="md-card-title">{title}</h3> : null}
       {subtitle ? <p className="md-card-subtitle">{subtitle}</p> : null}
-      <div>{children}</div>
+      {children}
     </article>
   );
 }

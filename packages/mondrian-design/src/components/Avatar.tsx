@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import type { ComponentTone } from '../types';
 import { cx } from '../utils';
 
@@ -30,13 +30,24 @@ export function Avatar({
   className,
   ...props
 }: AvatarProps): React.JSX.Element {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <span
       className={cx('md-avatar', `md-tone-${tone}`, className)}
       style={{ width: size, height: size, fontSize: Math.max(12, Math.floor(size * 0.36)) }}
       {...props}
     >
-      {src ? <img src={src} alt={alt ?? name ?? 'avatar'} className="md-avatar-img" /> : getInitials(name)}
+      {src && !imgError ? (
+        <img
+          src={src}
+          alt={alt ?? name ?? 'avatar'}
+          className="md-avatar-img"
+          onError={() => setImgError(true)}
+        />
+      ) : (
+        getInitials(name)
+      )}
     </span>
   );
 }

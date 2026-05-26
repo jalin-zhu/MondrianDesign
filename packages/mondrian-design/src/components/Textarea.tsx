@@ -16,6 +16,7 @@ export const Textarea = React.forwardRef<HTMLTextAreaElement, TextareaProps>(fun
       ref={ref}
       rows={rows}
       className={cx('md-control', 'md-field', 'md-textarea', `md-tone-${tone}`, error && 'md-field-error', className)}
+      aria-invalid={error || undefined}
       {...props}
     />
   );

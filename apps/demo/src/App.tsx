@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import {
   Alert,
+  AudioPlayer,
   Avatar,
   Badge,
   Button,
@@ -17,6 +18,7 @@ import {
   Tabs,
   Textarea,
   Toast,
+  VideoPlayer,
 } from 'mondrian-design';
 
 export default function App(): React.JSX.Element {
@@ -28,7 +30,7 @@ export default function App(): React.JSX.Element {
     <MondrianProvider>
       <main className="demo-root">
         <h1>MondrianDesign Demo</h1>
-        <p>16 practical components in a Mondrian block visual language.</p>
+        <p>18 practical components in a Mondrian block visual language.</p>
 
         <div className="demo-grid">
           <section className="demo-panel">
@@ -130,6 +132,28 @@ export default function App(): React.JSX.Element {
               <Skeleton height={16} width="84%" />
               <Skeleton width={46} height={46} circle />
             </div>
+          </section>
+
+          <section className="demo-panel">
+            <h2>Audio Player</h2>
+            <AudioPlayer
+              title="Ambient Track"
+              subtitle="Sample stream"
+              src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"
+              preload="none"
+              tone="yellow"
+            />
+          </section>
+
+          <section className="demo-panel">
+            <h2>Video Player</h2>
+            <VideoPlayer
+              title="Demo Clip"
+              subtitle="Sample MP4"
+              src="https://www.w3schools.com/html/mov_bbb.mp4"
+              preload="metadata"
+              tone="white"
+            />
           </section>
         </div>
 

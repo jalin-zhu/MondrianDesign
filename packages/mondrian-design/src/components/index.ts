@@ -1,4 +1,5 @@
 export * from './Alert';
+export * from './AudioPlayer';
 export * from './Avatar';
 export * from './Badge';
 export * from './Button';
@@ -14,3 +15,4 @@ export * from './Switch';
 export * from './Tabs';
 export * from './Textarea';
 export * from './Toast';
+export * from './VideoPlayer';

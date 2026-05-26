@@ -24,6 +24,7 @@ export const Select = React.forwardRef<HTMLSelectElement, SelectProps>(function 
         error && 'md-field-error',
         className,
       )}
+      aria-invalid={error || undefined}
       {...props}
     >
       {children}

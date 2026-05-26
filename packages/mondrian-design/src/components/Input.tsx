@@ -24,6 +24,7 @@ export const Input = React.forwardRef<HTMLInputElement, InputProps>(function Inp
         error && 'md-field-error',
         className,
       )}
+      aria-invalid={error || undefined}
       {...props}
     />
   );

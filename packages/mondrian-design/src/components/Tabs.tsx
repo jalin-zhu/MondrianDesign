@@ -1,4 +1,4 @@
-import React, { useId, useMemo, useState } from 'react';
+import React, { useCallback, useId, useMemo, useState } from 'react';
 import { cx } from '../utils';
 
 export interface TabItem {
@@ -21,25 +21,34 @@ export function Tabs({
   defaultValue,
   onValueChange,
   className,
-}: TabsProps): React.JSX.Element {
+}: TabsProps): React.JSX.Element | null {
   const fallbackKey = useMemo(() => items[0]?.key ?? '', [items]);
   const [internalValue, setInternalValue] = useState(defaultValue ?? fallbackKey);
   const activeValue = value ?? internalValue;
-  const active = items.find((item) => item.key === activeValue) ?? items[0];
+  const activeIndex = items.findIndex((item) => item.key === activeValue);
+  const active = activeIndex >= 0 ? items[activeIndex] : items[0];
   const uid = useId();
 
-  const setValue = (next: string): void => {
+  const setValue = useCallback((next: string): void => {
     if (value === undefined) {
       setInternalValue(next);
     }
     onValueChange?.(next);
-  };
+  }, [value, onValueChange]);
+
+  if (items.length === 0) {
+    return null;
+  }
+
+  if (!active) {
+    return null;
+  }
 
   return (
     <div className={cx('md-tabs', className)}>
       <div className="md-tabs-list" role="tablist" aria-label="Mondrian Tabs">
         {items.map((item) => {
-          const selected = item.key === active?.key;
+          const selected = item.key === active.key;
           return (
             <button
               key={item.key}
@@ -55,11 +64,9 @@ export function Tabs({
           );
         })}
       </div>
-      {active ? (
-        <div role="tabpanel" id={`${uid}-panel-${active.key}`} aria-labelledby={`${uid}-tab-${active.key}`}>
-          {active.content}
-        </div>
-      ) : null}
+      <div role="tabpanel" id={`${uid}-panel-${active.key}`} aria-labelledby={`${uid}-tab-${active.key}`}>
+        {active.content}
+      </div>
     </div>
   );
 }
