@@ -127,7 +127,7 @@ function ComponentShowcase() {
   const tabs = [
     { key: 'a', label: 'Overview', content: <p style={{ padding: 16 }}>The Mondrian palette is defined by bold primary colors and thick black borders.</p> },
     { key: 'b', label: 'Colors', content: <p style={{ padding: 16 }}>Red, yellow, blue, white, and black form the core of every component.</p> },
-    { key: 'c', label: 'Grid', content: <p style={{ padding: 16 }}>Asymmetric grids and rectangles create tension and balance, just like Mondrian's paintings.</p> },
+    { key: 'c', label: 'Grid', content: <p style={{ padding: 16 }}>Asymmetric grids and rectangles create tension and balance, just like Mondrian&apos;s paintings.</p> },
   ];
 
   return (
@@ -271,12 +271,12 @@ function QuickStartSection() {
         </Card>
         <Card title="2. Use" tone="white">
           <div className="code-block">
-            <span className="keyword">import</span> {'{ '}<span className="tag">MondrianProvider</span>, <span className="tag">Button</span> {' }'} <span className="keyword">from</span> <span className="string">'mondrian-design'</span>;<br />
-            <span className="keyword">import</span> <span className="string">'mondrian-design/styles.css'</span>;<br /><br />
+            <span className="keyword">import</span> {'{ '}<span className="tag">MondrianProvider</span>, <span className="tag">Button</span> {' }'} <span className="keyword">from</span> <span className="string">&apos;mondrian-design&apos;</span>;<br />
+            <span className="keyword">import</span> <span className="string">&apos;mondrian-design/styles.css&apos;</span>;<br /><br />
             <span className="keyword">function</span> <span className="tag">App</span>() {'{'}<br />
             &nbsp;&nbsp;<span className="keyword">return</span> (<br />
             &nbsp;&nbsp;&nbsp;&nbsp;&lt;<span className="tag">MondrianProvider</span>&gt;<br />
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span className="tag">Button</span> tone={<span className="string">"blue"</span>}&gt;Hello&lt;/<span className="tag">Button</span>&gt;<br />
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span className="tag">Button</span> tone={<span className="string">&quot;blue&quot;</span>}&gt;Hello&lt;/<span className="tag">Button</span>&gt;<br />
             &nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span className="tag">MondrianProvider</span>&gt;<br />
             &nbsp;&nbsp;);<br />
             {'}'}
@@ -294,10 +294,10 @@ function ThemeSection() {
       <p className="section-subtitle">Override any part of the design token system to match your brand.</p>
       <Card tone="white">
         <div className="code-block">
-          <span className="keyword">import</span> {'{ '}<span className="tag">MondrianProvider</span>, <span className="tag">createMondrianTheme</span> {' }'} <span className="keyword">from</span> <span className="string">'mondrian-design'</span>;<br /><br />
+          <span className="keyword">import</span> {'{ '}<span className="tag">MondrianProvider</span>, <span className="tag">createMondrianTheme</span> {' }'} <span className="keyword">from</span> <span className="string">&apos;mondrian-design&apos;</span>;<br /><br />
           <span className="keyword">const</span> theme = <span className="tag">createMondrianTheme</span>({'{'}<br />
-          &nbsp;&nbsp;palette: {'{'} red: <span className="string">'#ff4d4d'</span>, blue: <span className="string">'#3b82f6'</span> {'}'},<br />
-          &nbsp;&nbsp;border: {'{'} width: <span className="string">'3px'</span> {'}'},<br />
+          &nbsp;&nbsp;palette: {'{'} red: <span className="string">&apos;#ff4d4d&apos;</span>, blue: <span className="string">&apos;#3b82f6&apos;</span> {'}'},<br />
+          &nbsp;&nbsp;border: {'{'} width: <span className="string">&apos;3px&apos;</span> {'}'},<br />
           {'}'});<br /><br />
           <span className="keyword">function</span> <span className="tag">App</span>() {'{'}<br />
           &nbsp;&nbsp;<span className="keyword">return</span> (<br />
@@ -356,7 +356,7 @@ export function App() {
   return (
     <>
       <header className="site-header">
-        <a href="#" className="site-logo">MondrianDesign</a>
+        <a href="/" className="site-logo">MondrianDesign</a>
         <nav className="site-nav">
           <a href="#features">Features</a>
           <a href="#components">Components</a>
