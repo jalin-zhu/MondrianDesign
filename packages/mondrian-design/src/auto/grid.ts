@@ -53,6 +53,31 @@ export function generateGridLayout(
 /*  辅助函数                                                            */
 /* ================================================================== */
 
+/** 确定性洗牌：使用素数步长交错排列，渲染稳定 */
+function deterministicShuffle<T>(arr: T[], count: number): T[] {
+  const result: T[] = [];
+  // 互质步长确保每个元素都被访问且不重复
+  const step = nearestCoprime(arr.length, 7);
+  let idx = 0;
+  for (let i = 0; i < arr.length; i++) {
+    result.push(arr[idx]);
+    idx = (idx + step) % arr.length;
+  }
+  return result.slice(0, count);
+}
+
+/** 找到与 n 互质的最接近 target 的数 */
+function nearestCoprime(n: number, target: number): number {
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
+  for (let d = 0; d < n; d++) {
+    const a = target + d;
+    if (a < n && gcd(n, a) === 1) return a;
+    const b = target - d;
+    if (b > 1 && gcd(n, b) === 1) return b;
+  }
+  return 1;
+}
+
 /** 最优列数：ceil(√n)，限制在 1-6 */
 function optimalColumns(n: number): number {
   return Math.max(1, Math.min(6, Math.ceil(Math.sqrt(n))));
@@ -142,7 +167,7 @@ function assignTones(count: number, dominant: ComponentTone): ComponentTone[] {
   const domCount = Math.max(1, Math.round(count * 0.3));
   const accentCount = Math.max(0, Math.round(count * 0.2));
   const whiteCount = Math.max(1, Math.round(count * 0.25));
-  const canvasCount = count - domCount - accentCount - whiteCount;
+  const canvasCount = Math.max(0, count - domCount - accentCount - whiteCount);
 
   // 对比色：从三原色中排除主色后选择
   const accentOptions = PRIMARY_TONES.filter((t) => t !== dominant);
@@ -160,24 +185,21 @@ function assignTones(count: number, dominant: ComponentTone): ComponentTone[] {
     pool.push(accentOptions[i % accentOptions.length]);
   }
 
-  // Fisher-Yates 洗牌，让色块分布更自然
-  for (let i = pool.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [pool[i], pool[j]] = [pool[j], pool[i]];
-  }
+  // 基于素数的确定性交错排列，避免同色聚集且跨渲染稳定
+  const shuffled = deterministicShuffle(pool, count);
 
   // 应用序列（限制同色不连续超过 2 个）
   let consecutive = 0;
   let lastTone: ComponentTone | null = null;
 
   for (let i = 0; i < count; i++) {
-    let picked = pool[i];
+    let picked = shuffled[i];
     if (picked === lastTone) {
       consecutive++;
       if (consecutive >= 2 && i + 1 < count) {
         // 与下一个交换
-        [pool[i], pool[i + 1]] = [pool[i + 1], pool[i]];
-        picked = pool[i];
+        [shuffled[i], shuffled[i + 1]] = [shuffled[i + 1], shuffled[i]];
+        picked = shuffled[i];
         consecutive = 0;
       }
     } else {

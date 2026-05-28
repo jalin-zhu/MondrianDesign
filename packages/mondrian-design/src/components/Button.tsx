@@ -20,6 +20,7 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(function 
         'md-control',
         'md-button',
         `md-tone-${tone}`,
+        variant === 'secondary' && 'md-button-secondary',
         variant === 'outlined' && 'md-button-outlined',
         size === 'sm' && 'md-size-sm',
         size === 'lg' && 'md-size-lg',

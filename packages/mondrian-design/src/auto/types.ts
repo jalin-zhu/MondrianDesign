@@ -93,8 +93,8 @@ export interface MondrianTypeScale {
 /* ------------------------------------------------------------------ */
 
 export interface AutoThemeOptions {
-  /** 种子颜色 (hex) */
-  seedColor: string;
+  /** 种子颜色 (hex)，默认 '#d62828' (蒙德里安红) */
+  seedColor?: string;
   /** 调色板生成选项 */
   palette?: PaletteGenOptions;
   /** 网格选项 */

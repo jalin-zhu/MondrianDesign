@@ -1,5 +1,4 @@
 import React, { useMemo } from 'react';
-import type { MondrianTheme } from '../types';
 import type { GridOptions, MondrianGridConfig } from '../auto/types';
 import { generateGridLayout } from '../auto/grid';
 import { generateMondrianPalette } from '../auto/palette';
@@ -82,15 +81,12 @@ export function MondrianGrid({
         const cell = gridConfig.cells[i];
         if (!cell) return null;
 
-        const bgColor = palette[getPaletteKey(cell.tone)];
-
         return (
           <div
             key={cell.area}
             className={cx('md-grid-cell', `md-tone-${cell.tone}`, cell.dominant && 'md-grid-cell-dominant')}
             style={{
               gridArea: cell.area,
-              ...(bgColor ? {} : {}),
             }}
           >
             {child}
@@ -99,17 +95,4 @@ export function MondrianGrid({
       })}
     </div>
   );
-}
-
-/** 将 ComponentTone 映射到 palette 键 */
-function getPaletteKey(tone: string): keyof MondrianTheme['palette'] {
-  const map: Record<string, keyof MondrianTheme['palette']> = {
-    red: 'red',
-    yellow: 'yellow',
-    blue: 'blue',
-    white: 'white',
-    black: 'black',
-    default: 'canvas',
-  };
-  return map[tone] ?? 'canvas';
 }

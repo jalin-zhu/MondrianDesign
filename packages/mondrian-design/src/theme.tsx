@@ -51,7 +51,7 @@ export interface MondrianProviderProps {
 }
 
 export function MondrianProvider({ children, theme, autoTheme }: MondrianProviderProps): React.JSX.Element {
-  const autoResult = useMondrianAutoTheme(autoTheme ?? { seedColor: '#d62828' });
+  const autoResult = useMondrianAutoTheme(autoTheme);
   const resolvedTheme = useMemo(
     () => (autoTheme ? autoResult.theme : createMondrianTheme(theme)),
     [theme, autoTheme, autoResult.theme],

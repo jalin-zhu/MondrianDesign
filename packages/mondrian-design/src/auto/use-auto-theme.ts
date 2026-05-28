@@ -27,8 +27,8 @@ const DEFAULT_NON_PALETTE: Omit<MondrianTheme, 'palette'> = {
  * return <MondrianProvider theme={theme}><App /></MondrianProvider>;
  * ```
  */
-export function useMondrianAutoTheme(options: AutoThemeOptions): AutoThemeResult {
-  const { seedColor, palette: paletteOptions, baseFontSize = 16, typeRatio } = options;
+export function useMondrianAutoTheme(options: AutoThemeOptions = {}): AutoThemeResult {
+  const { seedColor = '#d62828', palette: paletteOptions, baseFontSize = 16, typeRatio } = options;
 
   const palette = useMemo(
     () => generateMondrianPalette(seedColor, paletteOptions),

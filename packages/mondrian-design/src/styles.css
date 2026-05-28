@@ -92,6 +92,49 @@
   width: 100%;
 }
 
+/* Secondary: inverted — uses currentColor for background, text becomes the tone */
+.md-button-secondary {
+  background: transparent;
+  color: var(--md-black);
+  border-color: var(--md-black);
+}
+
+.md-button-secondary.md-tone-red {
+  background: transparent;
+  border-color: var(--md-red);
+  color: var(--md-red);
+}
+
+.md-button-secondary.md-tone-yellow {
+  background: transparent;
+  border-color: var(--md-yellow);
+  color: var(--md-yellow);
+}
+
+.md-button-secondary.md-tone-blue {
+  background: transparent;
+  border-color: var(--md-blue);
+  color: var(--md-blue);
+}
+
+.md-button-secondary.md-tone-white {
+  background: transparent;
+  border-color: var(--md-white);
+  color: var(--md-white);
+}
+
+.md-button-secondary.md-tone-black {
+  background: transparent;
+  border-color: var(--md-black);
+  color: var(--md-black);
+}
+
+.md-button-secondary.md-tone-default {
+  background: transparent;
+  border-color: var(--md-black);
+  color: var(--md-black);
+}
+
 .md-button-outlined {
   background: transparent;
   color: inherit;

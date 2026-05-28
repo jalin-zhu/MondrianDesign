@@ -146,7 +146,8 @@ export function generateMondrianPalette(
   let blueH: number;
 
   if (warm) {
-    redH = wrapHue(seed.h);
+    // forceWarm 且种子是冷色时，强制红色使用暖色色相 (0°)
+    redH = options.forceWarm && !isWarmSeed(seed) ? 0 : wrapHue(seed.h);
     yellowH = wrapHue(redH + 120);
     blueH = wrapHue(redH + 240);
   } else {
