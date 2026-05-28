@@ -47,7 +47,8 @@ function wrapElement(
         for (const [key, value] of Object.entries(props)) {
           if (key === 'ref') continue;
           if (typeof value === 'boolean') {
-            if (value) attrs[key] = '';
+            // 布尔属性：true 时设置属性，false 时显式传 null 以触发 removeAttribute
+            attrs[key] = value ? '' : null;
           } else if (value !== undefined && value !== null) {
             attrs[key] = value;
           }

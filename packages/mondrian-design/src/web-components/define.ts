@@ -118,6 +118,15 @@ export abstract class MondrianElement extends HTMLElement {
   }
 
   /**
+   * 标记组件已完成首次渲染。
+   * 不使用 firstRender 的组件（直接操作 innerHTML 的组件）必须手动调用此方法，
+   * 否则 attributeChangedCallback 将不会触发重渲染。
+   */
+  protected markMounted(): void {
+    this._mounted = true;
+  }
+
+  /**
    * 首次渲染辅助：设置 innerHTML 后将保存的子节点移入 slot 容器。
    * @param html 要设置的 innerHTML
    * @param slotSelector CSS 选择器定位 slot 容器（子节点将被移入此元素）

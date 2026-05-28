@@ -129,6 +129,7 @@ export class MdAvatar extends MondrianElement {
       : '';
     const fallbackHtml = `<span style="display:${this.src ? 'none' : 'block'}">${initials}</span>`;
     this.innerHTML = `<span class="md-avatar md-tone-${this.tone}" style="width:${size}px;height:${size}px;font-size:${fontSize}px;display:inline-flex;align-items:center;justify-content:center;border:2px solid #111;font-weight:700;overflow:hidden">${imgHtml}${fallbackHtml}</span>`;
+    this.markMounted();
   }
 }
 defineElement('md-avatar', MdAvatar);
@@ -155,6 +156,7 @@ export class MdInput extends MondrianElement {
     this.innerHTML = `<input class="md-control md-field md-tone-${this.tone} ${this.sizingClass() || ''} ${this.error ? 'md-field-error' : ''}" ${pH} type="${this.type}" ${this.disabled ? 'disabled' : ''} aria-invalid="${this.error}" style="width:100%;padding:${this.pad()[0]} ${this.pad()[1]};background:var(--md-white);color:var(--md-black);appearance:none" />`;
     const input = this.querySelector('input')!;
     input.addEventListener('input', () => this.emit('md-change', { value: input.value }));
+    this.markMounted();
   }
 }
 defineElement('md-input', MdInput);
@@ -179,6 +181,7 @@ export class MdProgress extends MondrianElement {
     const pct = Math.round((safeVal / maxVal) * 100);
     const label = this.showvalue ? `<span class="md-progress-label" style="font-size:12px;font-weight:700">${pct}%</span>` : '';
     this.innerHTML = `<div class="md-progress-wrap" style="display:grid;gap:4px"><div class="md-progress" role="progressbar" aria-valuemin="0" aria-valuemax="${maxVal}" aria-valuenow="${safeVal}" aria-valuetext="${pct}%" style="width:100%;height:14px;border:2px solid #111;background:var(--md-white)"><div class="md-progress-fill md-tone-${this.tone}" style="width:${pct}%;height:100%"></div></div>${label}</div>`;
+    this.markMounted();
   }
 }
 defineElement('md-progress', MdProgress);
@@ -207,6 +210,7 @@ export class MdSwitch extends MondrianElement {
         this.emit('md-change', { checked: this.checked });
       }
     });
+    this.markMounted();
   }
 }
 defineElement('md-switch', MdSwitch);
@@ -226,6 +230,7 @@ export class MdSkeleton extends MondrianElement {
     const h = this.getAttribute('height') || '16';
     const circ = this.circle ? 'md-skeleton-circle' : '';
     this.innerHTML = `<div class="md-skeleton ${circ}" aria-hidden="true" style="width:${w};height:${h}px;border:2px solid #111"></div>`;
+    this.markMounted();
   }
 }
 defineElement('md-skeleton', MdSkeleton);
@@ -239,6 +244,7 @@ export class MdAlert extends MondrianElement {
 
   get title(): string { return this.getAttribute('title') ?? ''; }
   set title(v: string) { this.setAttribute('title', v); }
+  get description(): string { return this.getAttribute('description') ?? ''; }
   set description(v: string | null) { if (v) this.setAttribute('description', v); else this.removeAttribute('description'); }
 
   override render(): void {

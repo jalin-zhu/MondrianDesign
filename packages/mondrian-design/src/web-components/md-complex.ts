@@ -41,6 +41,9 @@ export class MdModal extends MondrianElement {
     if (name === 'open') {
       if (newVal !== null) this.lockScroll(true);
       else this.lockScroll(false);
+      // 强制渲染：父类 attributeChangedCallback 依赖 _mounted，
+      // 但首次从关闭到打开时 _mounted 为 false，因此需要直接调用 render
+      this.render();
     }
     super.attributeChangedCallback(name, old, newVal);
   }
@@ -139,7 +142,7 @@ export class MdTabs extends MondrianElement {
     if (list.length === 0) { this.innerHTML = ''; return; }
 
     const active = list.find((i) => i.key === this.value) || list[0];
-    const uid = 'md-tabs-' + Math.random().toString(36).slice(2, 8);
+    const uid = 'md-tabs-' + (this.id || '0');
 
     const tabBtns = list
       .map(
