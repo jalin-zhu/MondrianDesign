@@ -508,12 +508,18 @@ select.md-field {
 
 .md-grid {
   width: 100%;
+  /* 确保网格内的内容不会撑破布局 */
+  min-width: 0;
 }
 
 .md-grid-cell {
   border: var(--md-border-width) solid var(--md-black);
   padding: var(--md-space-md);
+  min-width: 0;
   min-height: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
   transition: transform var(--md-motion-fast) ease;
 }
 
@@ -532,4 +538,22 @@ select.md-field {
   background: var(--md-canvas);
   min-height: 100%;
   padding: var(--md-space-xl);
+}
+
+/* --- 响应式：移动端网格 --- */
+@media (max-width: 480px) {
+  .md-grid-cell {
+    padding: var(--md-space-sm);
+  }
+
+  .md-canvas {
+    padding: var(--md-space-sm);
+  }
+}
+
+/* --- 响应式：平板端 --- */
+@media (max-width: 768px) {
+  .md-grid-cell {
+    padding: var(--md-space-sm);
+  }
 }

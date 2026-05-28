@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { generateGridLayout } from '../auto/grid';
+import { generateGridLayout, responsiveMaxColumns, responsiveGap } from '../auto/grid';
 
 describe('grid engine', () => {
   describe('generateGridLayout', () => {
@@ -56,6 +56,66 @@ describe('grid engine', () => {
       expect(config.columns).toBeDefined();
       // With ratio 2.0, first column should be larger
       expect(config.columns).toContain('fr');
+    });
+
+    it('respects maxColumns constraint', () => {
+      // 12 children → ideal cols = 4, but maxColumns = 2 → cols = 2
+      const config = generateGridLayout(12, {}, 2);
+      const rowLines = config.areas.split('\n');
+      expect(rowLines.length).toBe(6); // 12 items / 2 cols = 6 rows
+    });
+
+    it('maxColumns does not exceed item count', () => {
+      // 3 children, maxColumn = 5 → cols should be capped by item count
+      const config = generateGridLayout(3, {}, 5);
+      // ideal = ceil(sqrt(3)) = 2, max = 5 → cols = 2
+      const rowLines = config.areas.split('\n');
+      expect(rowLines.length).toBe(2); // 3 items / 2 cols = 2 rows
+    });
+  });
+
+  describe('responsiveMaxColumns', () => {
+    it('returns 2 for mobile width (< 480px)', () => {
+      expect(responsiveMaxColumns(375)).toBe(2);
+      expect(responsiveMaxColumns(320)).toBe(2);
+    });
+
+    it('returns 3 for tablet width (480-767px)', () => {
+      expect(responsiveMaxColumns(500)).toBe(3);
+      expect(responsiveMaxColumns(760)).toBe(3);
+    });
+
+    it('returns 4 for small desktop (768-1023px)', () => {
+      expect(responsiveMaxColumns(800)).toBe(4);
+      expect(responsiveMaxColumns(1000)).toBe(4);
+    });
+
+    it('returns 6 for full desktop (>= 1024px)', () => {
+      expect(responsiveMaxColumns(1200)).toBe(6);
+      expect(responsiveMaxColumns(1920)).toBe(6);
+    });
+
+    it('respects custom breakpoints', () => {
+      const bp = { mobile: 600, tablet: 900, desktop: 1200 };
+      expect(responsiveMaxColumns(500, 12, bp)).toBe(2);
+      expect(responsiveMaxColumns(800, 12, bp)).toBe(3);
+      expect(responsiveMaxColumns(1000, 12, bp)).toBe(4);
+    });
+  });
+
+  describe('responsiveGap', () => {
+    it('halves gap on mobile', () => {
+      expect(responsiveGap(375, 12)).toBe(6);
+    });
+
+    it('reduces gap on tablet', () => {
+      const gap = responsiveGap(600, 12);
+      expect(gap).toBeLessThan(12);
+      expect(gap).toBeGreaterThanOrEqual(6);
+    });
+
+    it('keeps original gap on desktop', () => {
+      expect(responsiveGap(1200, 12)).toBe(12);
     });
   });
 });

@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import type { GridOptions, MondrianGridConfig } from '../auto/types';
-import { generateGridLayout } from '../auto/grid';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import type { GridCell, GridOptions, GridBreakpoints, MondrianGridConfig } from '../auto/types';
+import { generateGridLayout, responsiveMaxColumns, responsiveGap } from '../auto/grid';
 import { generateMondrianPalette } from '../auto/palette';
 import { useMondrianTheme } from '../theme';
 import { cx } from '../utils';
@@ -8,7 +8,7 @@ import { cx } from '../utils';
 export interface MondrianGridProps extends GridOptions {
   /** 种子颜色，提供后自动生成整个网格的调色板 */
   seedColor?: string;
-  /** 网格间距 (px 或 CSS 值) */
+  /** 网格间距 (px 或 CSS 值)，支持响应式自动缩放 */
   gap?: number | string;
   /** 子元素 */
   children?: React.ReactNode;
@@ -39,10 +39,28 @@ export function MondrianGrid({
   gap = 12,
   ratio,
   dominantTone,
+  breakpoints,
   className,
   style,
 }: MondrianGridProps): React.JSX.Element {
   const parentTheme = useMondrianTheme();
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [containerWidth, setContainerWidth] = useState<number>(0);
+
+  // ---- ResizeObserver: 监听容器宽度变化 ----
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    // 初始宽度
+    setContainerWidth(el.clientWidth);
+    const ro = new ResizeObserver((entries) => {
+      for (const entry of entries) {
+        setContainerWidth(entry.contentBoxSize?.[0]?.inlineSize ?? entry.contentRect.width);
+      }
+    });
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
 
   // 自动或使用父级调色板
   const palette = useMemo(() => {
@@ -56,24 +74,44 @@ export function MondrianGrid({
   const childArray = React.Children.toArray(children).filter(Boolean);
   const count = childArray.length;
 
+  // 响应式最大列数
+  const maxCols = useMemo(() => {
+    if (containerWidth <= 0) return undefined;
+    return responsiveMaxColumns(containerWidth, typeof gap === 'number' ? gap : 12, breakpoints);
+  }, [containerWidth, gap, breakpoints]);
+
+  // 响应式 gap
+  const actualGap = useMemo(() => {
+    if (typeof gap !== 'number') return gap;
+    if (containerWidth <= 0) return `${gap}px`;
+    return `${responsiveGap(containerWidth, gap)}px`;
+  }, [containerWidth, gap]);
+
   // 生成网格布局
   const gridConfig: MondrianGridConfig = useMemo(
-    () => generateGridLayout(count, { columns, ratio, dominantTone }),
-    [count, columns, ratio, dominantTone],
+    () => generateGridLayout(count, { columns, ratio, dominantTone }, maxCols),
+    [count, columns, ratio, dominantTone, maxCols],
   );
 
-  // gap 值
-  const gapValue = typeof gap === 'number' ? `${gap}px` : gap;
+  // 首屏用 ref callback 避免 ResizeObserver 延迟导致的闪烁
+  const setContainerRef = useCallback((el: HTMLDivElement | null) => {
+    (containerRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+    if (el && containerWidth === 0) {
+      setContainerWidth(el.clientWidth);
+    }
+  }, [containerWidth]);
 
   return (
     <div
+      ref={setContainerRef}
       className={cx('md-grid', className)}
       style={{
         display: 'grid',
         gridTemplateColumns: gridConfig.columns,
         gridTemplateRows: gridConfig.rows,
         gridTemplateAreas: gridConfig.areas,
-        gap: gapValue,
+        gridAutoRows: 'minmax(80px, auto)',
+        gap: actualGap,
         ...style,
       }}
     >

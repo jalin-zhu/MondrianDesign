@@ -66,6 +66,18 @@ export interface GridOptions {
   ratio?: number;
   /** 主色调 (用于大色块) */
   dominantTone?: ComponentTone;
+  /** 响应式断点配置 */
+  breakpoints?: GridBreakpoints;
+}
+
+/** 响应式列数断点 */
+export interface GridBreakpoints {
+  /** 移动端阈值 (px)，默认 480 */
+  mobile?: number;
+  /** 平板端阈值 (px)，默认 768 */
+  tablet?: number;
+  /** 桌面端阈值 (px)，默认 1024 */
+  desktop?: number;
 }
 
 /* ------------------------------------------------------------------ */

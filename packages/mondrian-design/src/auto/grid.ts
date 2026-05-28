@@ -1,8 +1,15 @@
 import type { ComponentTone, MondrianTheme } from '../types';
-import type { GridCell, GridOptions, MondrianGridConfig } from './types';
+import type { GridCell, GridOptions, GridBreakpoints, MondrianGridConfig } from './types';
 
 /** 默认黄金比例 */
 const PHI = 1.618;
+
+/** 默认响应式断点 (px) */
+const DEFAULT_BREAKPOINTS: Required<GridBreakpoints> = {
+  mobile: 480,
+  tablet: 768,
+  desktop: 1024,
+};
 
 /** 蒙德里安三原色色调 */
 const PRIMARY_TONES: ComponentTone[] = ['red', 'yellow', 'blue'];
@@ -16,24 +23,33 @@ const NEUTRAL_TONES: ComponentTone[] = ['white', 'default'];
  * 自动将 N 个子元素排列成蒙德里安风格的非对称网格布局。
  *
  * 排版原则：
- * - 行列数由 √n 取整确定
+ * - 行列数由 √n 取整确定，并受容器宽度约束
  * - 列宽应用黄金比例，创造非对称视觉张力
  * - 色彩分配：主色大色块 + 对比色小色块 + 留白
+ * - 响应式：窄屏自动减少列数，避免内容挤压
  *
- * @param count   子元素数量
- * @param options 排版选项
+ * @param count      子元素数量
+ * @param options    排版选项
+ * @param maxColumns 最大列数限制（由容器宽度决定，可选）
  * @returns CSS Grid 配置
  */
 export function generateGridLayout(
   count: number,
   options: GridOptions = {},
+  maxColumns?: number,
 ): MondrianGridConfig {
   if (count <= 0) {
     return { columns: '1fr', rows: '1fr', areas: '', cells: [] };
   }
 
   const ratio = options.ratio ?? PHI;
-  const cols = options.columns && options.columns > 0 ? options.columns : optimalColumns(count);
+  const idealCols = options.columns && options.columns > 0
+    ? options.columns
+    : optimalColumns(count);
+  // 受容器宽度约束后的实际列数
+  const cols = maxColumns !== undefined
+    ? Math.max(1, Math.min(idealCols, maxColumns))
+    : idealCols;
   const rows = Math.ceil(count / cols);
 
   // ---- 列宽 ----
@@ -81,6 +97,41 @@ function nearestCoprime(n: number, target: number): number {
 /** 最优列数：ceil(√n)，限制在 1-6 */
 function optimalColumns(n: number): number {
   return Math.max(1, Math.min(6, Math.ceil(Math.sqrt(n))));
+}
+
+/**
+ * 根据容器宽度确定最大允许列数。
+ *
+ * 每列至少需要 120px 内容宽度（不含 gap 和 padding）才能
+ * 保证蒙德里安色块的视觉冲击力和内容可读性。
+ *
+ * @param containerWidth 容器宽度 (px)
+ * @param gap           网格间距 (px)
+ * @param breakpoints   自定义断点
+ * @returns 最大允许列数
+ */
+export function responsiveMaxColumns(
+  containerWidth: number,
+  gap: number = 12,
+  breakpoints?: GridBreakpoints,
+): number {
+  const bp = { ...DEFAULT_BREAKPOINTS, ...breakpoints };
+  // 每列最小宽度 = 内容 120px + padding 24px + 边框 4px ≈ 148px
+  // 加上 gap 分摊，实际更宽松
+  if (containerWidth < bp.mobile) return 2;   // < 480px: 最多 2 列
+  if (containerWidth < bp.tablet) return 3;   // < 768px: 最多 3 列
+  if (containerWidth < bp.desktop) return 4;  // < 1024px: 最多 4 列
+  return 6;  // 桌面端: 最多 6 列
+}
+
+/**
+ * 根据容器宽度计算建议的 gap 值。
+ * 小屏幕缩小间距以最大化内容空间。
+ */
+export function responsiveGap(containerWidth: number, baseGap: number): number {
+  if (containerWidth < 480) return Math.max(4, Math.round(baseGap * 0.5));
+  if (containerWidth < 768) return Math.max(6, Math.round(baseGap * 0.67));
+  return baseGap;
 }
 
 /** 生成黄金比例列宽序列 */

@@ -6,6 +6,7 @@ export type {
   GridCell,
   MondrianGridConfig,
   GridOptions,
+  GridBreakpoints,
   MondrianTypeScale,
   AutoThemeOptions,
   AutoThemeResult,
@@ -13,6 +14,6 @@ export type {
 
 export { generateMondrianPalette } from './palette';
 export { autoTone, autoTextColor, getBestPairing } from './tone-selector';
-export { generateGridLayout } from './grid';
+export { generateGridLayout, responsiveMaxColumns, responsiveGap } from './grid';
 export { generateTypeScale } from './typography';
 export { useMondrianAutoTheme } from './use-auto-theme';
