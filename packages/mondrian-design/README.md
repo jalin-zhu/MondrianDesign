@@ -9,7 +9,8 @@ Mondrian-inspired React UI component library. A design system built on bold geom
 - **TypeScript-first** with full type definitions
 - **Accessible** -- proper ARIA attributes, keyboard navigation, and screen-reader support
 - **Tree-shakeable** -- import only what you need
-- **Lightweight** -- no external runtime dependencies beyond React
+- **React + Web Components + Vue** -- use the same design system across frameworks
+- **Lightweight** -- no external runtime dependencies (React version)
 
 ## Installation
 
@@ -69,6 +70,196 @@ function App() {
 ```
 
 You can override any subset of the theme -- unspecified values fall back to the classic Mondrian palette. Use `useMondrianTheme()` to consume the current theme in your own components.
+
+## Framework Support
+
+MondrianDesign offers three integration modes, all sharing the same CSS custom properties and visual language:
+
+| Mode | How It Works | Best For |
+|------|-------------|----------|
+| **React** | Native React components | React apps (Next.js, Vite, CRA, Remix) |
+| **Web Components** | Framework-agnostic Custom Elements | Any HTML page, Svelte, Angular, plain JS |
+| **Vue** | Vue 3 wrappers over Web Components | Vue 3 / Nuxt apps |
+
+---
+
+### Web Components (Framework-Agnostic)
+
+Every MondrianDesign component is also available as a **Custom Element** (`<md-*>`). No React, Vue, or any framework required -- just import and use in HTML.
+
+```bash
+npm install mondrian-design
+```
+
+**ESM (recommended):**
+
+```html
+<script type="module">
+  import 'mondrian-design/web-components';
+</script>
+
+<md-button tone="red" size="lg">Click Me</md-button>
+<md-card title="Hello" subtitle="mondrian-design">
+  <md-input placeholder="Your name"></md-input>
+  <md-button tone="blue" block>Submit</md-button>
+</md-card>
+<md-progress value="60" tone="red" showvalue></md-progress>
+<md-switch label="Dark mode" checked></md-switch>
+<md-badge tone="red">New</md-badge>
+<md-avatar name="Piet Mondrian" tone="blue" size="48"></md-avatar>
+<md-skeleton width="200" height="24"></md-skeleton>
+<md-alert title="Notice" tone="yellow" description="Something needs attention"></md-alert>
+```
+
+**IIFE (direct `<script>`):**
+
+```html
+<script src="node_modules/mondrian-design/dist/index.web-components.global.js"></script>
+```
+
+All 11 Web Components:
+
+| Tag | Attributes | Events |
+|-----|-----------|--------|
+| `<md-alert>` | `tone`, `title`, `description` | -- |
+| `<md-avatar>` | `tone`, `name`, `size`, `src` | -- |
+| `<md-badge>` | `tone` | -- |
+| `<md-button>` | `tone`, `variant`, `size`, `disabled`, `block` | `click` |
+| `<md-card>` | `tone`, `title`, `subtitle` | -- |
+| `<md-input>` | `tone`, `size`, `placeholder`, `error`, `disabled`, `type`, `value` | `md-change` |
+| `<md-modal>` | `open`, `title` | `md-close` |
+| `<md-progress>` | `tone`, `value`, `max`, `showvalue` | -- |
+| `<md-skeleton>` | `width`, `height`, `circle` | -- |
+| `<md-switch>` | `tone`, `checked`, `disabled`, `label` | `md-change` |
+| `<md-tabs>` | `items` (JSON), `value` | `md-change` |
+
+Web Components use the same CSS custom properties as React components. Import `mondrian-design/styles.css` and wrap your app with a theme provider (or set CSS vars directly).
+
+---
+
+### Vue 3
+
+Vue 3 wrappers are available in the `mondrian-design-vue` package. They provide idiomatic Vue APIs (props, v-model, slots) over the Web Components.
+
+```bash
+npm install mondrian-design mondrian-design-vue
+```
+
+```vue
+<script setup>
+import 'mondrian-design/styles.css';
+import 'mondrian-design/web-components';
+import { MdButton, MdCard, MdInput, MdSwitch, MdModal } from 'mondrian-design-vue';
+
+const checked = ref(false);
+const modalOpen = ref(false);
+</script>
+
+<template>
+  <MdCard title="Welcome" subtitle="Vue + MondrianDesign">
+    <MdInput placeholder="Enter your name" />
+    <MdButton tone="blue" block @click="modalOpen = true">Open</MdButton>
+  </MdCard>
+
+  <MdSwitch v-model:checked="checked" label="Dark mode" tone="red" />
+
+  <MdModal v-model:open="modalOpen" title="Hello Vue!">
+    <p>This modal is controlled by Vue reactivity.</p>
+  </MdModal>
+</template>
+```
+
+All 11 Vue wrappers support `v-model` for value bindings (`MdSwitch`, `MdInput`, `MdModal`, `MdTabs`).
+
+---
+
+### SSR Frameworks (Next.js / Nuxt / SvelteKit)
+
+Web Components are a browser API. In SSR environments, they must only be registered on the client side.
+
+#### Next.js (App Router)
+
+Use `next/dynamic` with `ssr: false` to lazy-load Web Components:
+
+```tsx
+'use client';
+
+import dynamic from 'next/dynamic';
+
+const MondrianWC = dynamic(
+  () => import('mondrian-design/web-components'),
+  { ssr: false }
+);
+
+// Or import once in layout.tsx:
+// import 'mondrian-design/web-components';
+```
+
+#### Next.js (Pages Router)
+
+```tsx
+import { useEffect } from 'react';
+
+export default function App() {
+  useEffect(() => {
+    import('mondrian-design/web-components');
+  }, []);
+  // ...
+}
+```
+
+#### Nuxt 3
+
+Create a client-only plugin:
+
+```ts
+// plugins/mondrian.client.ts
+export default defineNuxtPlugin(() => {
+  import('mondrian-design/web-components');
+});
+```
+
+Then use `<ClientOnly>` around your `<md-*>` tags, or use the Vue wrappers from `mondrian-design-vue` (they work without `ClientOnly` since they just render DOM elements).
+
+#### SvelteKit
+
+```svelte
+<script>
+  import { onMount } from 'svelte';
+  onMount(() => import('mondrian-design/web-components'));
+</script>
+
+<md-button tone="red">Works in Svelte too!</md-button>
+```
+
+---
+
+### Other Build Tools
+
+Web Components work **out of the box** with every modern build tool (no plugins needed):
+
+| Tool | Setup |
+|------|-------|
+| **Vite** | `import 'mondrian-design/web-components'` -- no config needed |
+| **Webpack** | Same as Vite. Ensure `mondrian-design` is not excluded from your `node_modules` babel-loader rule |
+| **Rollup** | Same as Vite (Vite uses Rollup internally) |
+| **Parcel** | Zero-config -- just import and use |
+| **esbuild** | Zero-config |
+| **Angular** | Import in `main.ts`, add `CUSTOM_ELEMENTS_SCHEMA` to your module |
+
+Angular example:
+
+```ts
+// main.ts
+import 'mondrian-design/web-components';
+
+// app.module.ts
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
+@NgModule({
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+})
+export class AppModule {}
+```
 
 ## Components
 
@@ -571,7 +762,15 @@ function CustomComponent() {
 
 ## Browser Support
 
-All modern browsers (Chrome, Firefox, Safari, Edge). CSS custom properties are required -- IE 11 is not supported.
+All modern browsers (Chrome, Firefox, Safari, Edge). CSS custom properties and Custom Elements v1 are required -- IE 11 is not supported.
+
+### React Components
+
+Requires React 18 or 19.
+
+### Web Components & Vue Wrappers
+
+Custom Elements v1 is supported in all modern browsers. Polyfills are available for older environments via [@webcomponents/webcomponentsjs](https://github.com/webcomponents/polyfills).
 
 ## License
 

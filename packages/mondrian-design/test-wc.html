@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MondrianDesign Web Components — Test Page</title>
+<link rel="stylesheet" href="./src/styles.css">
+<style>
+  body {
+    font-family: system-ui, -apple-system, sans-serif;
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 0 20px;
+    background: #fafafa;
+  }
+  h1 { font-size: 2rem; margin-bottom: 8px; }
+  .section { margin: 32px 0; padding: 20px; border: 3px solid #111; }
+  .section h2 { margin: 0 0 16px; font-size: 1.2rem; }
+  .row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 12px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+</style>
+</head>
+<body>
+
+<h1>🎨 MondrianDesign Web Components</h1>
+<p>Static HTML test page — no framework, no build step.</p>
+
+<!-- Buttons -->
+<div class="section">
+  <h2>1. &lt;md-button&gt;</h2>
+  <div class="row">
+    <md-button tone="red" size="lg">Delete</md-button>
+    <md-button tone="blue">Save</md-button>
+    <md-button tone="yellow" size="sm">Draft</md-button>
+    <md-button tone="black">Dark</md-button>
+    <md-button variant="secondary" tone="red">Secondary</md-button>
+    <md-button variant="outlined">Outlined</md-button>
+    <md-button disabled>Disabled</md-button>
+    <md-button tone="blue" block style="width:100%">Block Button</md-button>
+  </div>
+</div>
+
+<!-- Badge -->
+<div class="section">
+  <h2>2. &lt;md-badge&gt;</h2>
+  <div class="row">
+    <md-badge tone="red">New</md-badge>
+    <md-badge tone="yellow">Draft</md-badge>
+    <md-badge tone="blue">Info</md-badge>
+    <md-badge tone="black">Dark</md-badge>
+    <md-badge tone="default">Default</md-badge>
+  </div>
+</div>
+
+<!-- Card -->
+<div class="section">
+  <h2>3. &lt;md-card&gt;</h2>
+  <div class="row">
+    <md-card title="Project Alpha" subtitle="Last updated 2 days ago" tone="white">
+      <p>This card uses Web Components directly in HTML.</p>
+      <md-button tone="blue" size="sm">Open</md-button>
+    </md-card>
+    <md-card title="Warning" tone="yellow">
+      <p>A card without subtitle.</p>
+    </md-card>
+  </div>
+</div>
+
+<!-- Avatar -->
+<div class="section">
+  <h2>4. &lt;md-avatar&gt;</h2>
+  <div class="row">
+    <md-avatar name="Piet Mondrian" tone="blue" size="48"></md-avatar>
+    <md-avatar name="Jane Doe" tone="red" size="40"></md-avatar>
+    <md-avatar name="John Smith" tone="yellow" size="56"></md-avatar>
+    <md-avatar name="A" tone="black" size="36"></md-avatar>
+    <md-avatar tone="default" size="44"></md-avatar>
+  </div>
+</div>
+
+<!-- Input -->
+<div class="section">
+  <h2>5. &lt;md-input&gt;</h2>
+  <div class="row">
+    <md-input placeholder="Enter your name" tone="white"></md-input>
+    <md-input placeholder="Required field" error></md-input>
+    <md-input placeholder="Small input" size="sm" tone="white"></md-input>
+    <md-input placeholder="Disabled" disabled></md-input>
+  </div>
+</div>
+
+<!-- Progress -->
+<div class="section">
+  <h2>6. &lt;md-progress&gt;</h2>
+  <div style="display:grid;gap:12px">
+    <md-progress value="25" tone="red" showvalue></md-progress>
+    <md-progress value="60" tone="blue" showvalue></md-progress>
+    <md-progress value="90" tone="yellow"></md-progress>
+    <md-progress value="100" tone="black" showvalue></md-progress>
+  </div>
+</div>
+
+<!-- Switch -->
+<div class="section">
+  <h2>7. &lt;md-switch&gt;</h2>
+  <div class="row">
+    <md-switch label="Dark mode" tone="blue"></md-switch>
+    <md-switch label="Notifications" tone="red" checked></md-switch>
+    <md-switch label="Disabled" disabled></md-switch>
+  </div>
+</div>
+
+<!-- Skeleton -->
+<div class="section">
+  <h2>8. &lt;md-skeleton&gt;</h2>
+  <div class="grid">
+    <div>
+      <md-skeleton width="200" height="24"></md-skeleton>
+      <md-skeleton width="160" height="16" style="margin-top:8px"></md-skeleton>
+    </div>
+    <md-skeleton width="48" height="48" circle></md-skeleton>
+    <md-skeleton width="100%" height="100"></md-skeleton>
+  </div>
+</div>
+
+<!-- Alert -->
+<div class="section">
+  <h2>9. &lt;md-alert&gt;</h2>
+  <div style="display:grid;gap:12px">
+    <md-alert title="Update Available" tone="blue" description="Version 2.0 is ready to install."></md-alert>
+    <md-alert title="Warning" tone="yellow" description="Your session will expire soon."></md-alert>
+    <md-alert title="Error" tone="red" description="Something went wrong."></md-alert>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="section">
+  <h2>10. &lt;md-modal&gt;</h2>
+  <md-button tone="blue" id="open-modal-btn">Open Modal</md-button>
+  <md-modal id="demo-modal" title="Confirm Action">
+    <p>Are you sure you want to continue? This modal supports:</p>
+    <ul>
+      <li>Escape key to close</li>
+      <li>Click backdrop to close</li>
+      <li>Body scroll lock</li>
+    </ul>
+  </md-modal>
+</div>
+
+<!-- Tabs -->
+<div class="section">
+  <h2>11. &lt;md-tabs&gt;</h2>
+  <md-tabs id="demo-tabs" value="overview"
+    items='[{"key":"overview","label":"Overview","content":"<p>This is the <strong>Overview</strong> tab. MondrianDesign Web Components work in any framework.</p>"},{"key":"settings","label":"Settings","content":"<p>This is the <strong>Settings</strong> tab. No React or Vue needed.</p>"},{"key":"about","label":"About","content":"<p>MondrianDesign v0.1 — A design system inspired by Piet Mondrian.</p>"}]'>
+  </md-tabs>
+</div>
+
+<!-- Script: use IIFE build -->
+<script src="./dist/index.web-components.global.js"></script>
+
+<script>
+// Modal demo
+document.getElementById('open-modal-btn').addEventListener('click', () => {
+  document.getElementById('demo-modal').setAttribute('open', '');
+});
+
+// Tabs demo: listen for tab change
+document.getElementById('demo-tabs').addEventListener('md-change', (e) => {
+  console.log('Tab changed to:', e.detail.value);
+});
+
+// Switch demo
+document.querySelectorAll('md-switch').forEach((sw) => {
+  sw.addEventListener('md-change', (e) => {
+    console.log('Switch toggled:', e.detail.checked);
+  });
+});
+
+console.log('✅ MondrianDesign Web Components test page loaded.');
+console.log('All 11 Custom Elements registered:', [
+  'md-button', 'md-badge', 'md-card', 'md-avatar', 'md-input',
+  'md-progress', 'md-switch', 'md-skeleton', 'md-alert',
+  'md-modal', 'md-tabs'
+].join(', '));
+</script>
+
+</body>
+</html>
