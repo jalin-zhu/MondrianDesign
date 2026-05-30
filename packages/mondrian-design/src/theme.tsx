@@ -1,6 +1,8 @@
 import React, { createContext, useContext, useMemo } from 'react';
 import { classicMondrianTheme } from './tokens';
 import type { DeepPartial, MondrianTheme } from './types';
+import type { AutoThemeOptions } from './auto/types';
+import { useMondrianAutoTheme } from './auto/use-auto-theme';
 
 const MondrianThemeContext = createContext<MondrianTheme>(classicMondrianTheme);
 
@@ -44,10 +46,16 @@ export function createMondrianTheme(overrides?: DeepPartial<MondrianTheme>): Mon
 export interface MondrianProviderProps {
   children: React.ReactNode;
   theme?: DeepPartial<MondrianTheme>;
+  /** 自动主题模式：提供种子颜色，自动生成完整调色板 */
+  autoTheme?: AutoThemeOptions;
 }
 
-export function MondrianProvider({ children, theme }: MondrianProviderProps): React.JSX.Element {
-  const resolvedTheme = useMemo(() => createMondrianTheme(theme), [theme]);
+export function MondrianProvider({ children, theme, autoTheme }: MondrianProviderProps): React.JSX.Element {
+  const autoResult = useMondrianAutoTheme(autoTheme);
+  const resolvedTheme = useMemo(
+    () => (autoTheme ? autoResult.theme : createMondrianTheme(theme)),
+    [theme, autoTheme, autoResult.theme],
+  );
 
   return (
     <MondrianThemeContext.Provider value={resolvedTheme}>

@@ -5,8 +5,11 @@ import {
   Avatar,
   Badge,
   Button,
+  ButtonList,
   Card,
   Checkbox,
+  DialogWindow,
+  ImageViewer,
   Input,
   Modal,
   MondrianProvider,
@@ -25,6 +28,7 @@ export default function App(): React.JSX.Element {
   const [modalOpen, setModalOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
   const [switchOn, setSwitchOn] = useState(true);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   return (
     <MondrianProvider>
@@ -153,6 +157,70 @@ export default function App(): React.JSX.Element {
               src="https://www.w3schools.com/html/mov_bbb.mp4"
               preload="metadata"
               tone="white"
+            />
+          </section>
+
+          {/* ===== 复合组件模板 ===== */}
+
+          <section className="demo-panel">
+            <h2>ImageViewer</h2>
+            <ImageViewer
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=600&h=400&fit=crop"
+              alt="蒙德里安风格建筑"
+              title="蒙德里安灵感"
+              subtitle="几何抽象"
+              caption="点击图片可放大查看"
+              tone="white"
+            />
+          </section>
+
+          <section className="demo-panel">
+            <h2>DialogWindow</h2>
+            <ButtonList
+              items={[
+                { label: '打开确认框', tone: 'blue', onClick: () => setDialogOpen(true) },
+              ]}
+            />
+            <DialogWindow
+              open={dialogOpen}
+              onOpenChange={setDialogOpen}
+              title="确认删除"
+              icon={<span>🗑️</span>}
+              size="sm"
+              actions={[
+                { label: '取消', variant: 'outlined', cancel: true },
+                {
+                  label: '确认删除',
+                  tone: 'red',
+                  onClick: () => {
+                    console.log('删除已确认');
+                  },
+                },
+              ]}
+            >
+              <p>此操作不可撤销。你确定要删除选中的项目吗？</p>
+            </DialogWindow>
+          </section>
+
+          <section className="demo-panel">
+            <h2>ButtonList</h2>
+            <p style={{ margin: '0 0 8px', fontSize: 13, fontWeight: 600 }}>横向排列</p>
+            <ButtonList
+              items={[
+                { label: '编辑', tone: 'blue', size: 'sm' },
+                { label: '保存', tone: 'black', size: 'sm' },
+                { label: '删除', tone: 'red', variant: 'outlined', size: 'sm' },
+              ]}
+            />
+            <p style={{ margin: '12px 0 8px', fontSize: 13, fontWeight: 600 }}>纵向排列</p>
+            <ButtonList
+              items={[
+                { label: '复制', block: true },
+                { label: '粘贴', block: true },
+                { label: '清空', block: true, variant: 'outlined', tone: 'red' },
+              ]}
+              direction="vertical"
+              align="stretch"
             />
           </section>
         </div>

@@ -92,6 +92,49 @@
   width: 100%;
 }
 
+/* Secondary: inverted — uses currentColor for background, text becomes the tone */
+.md-button-secondary {
+  background: transparent;
+  color: var(--md-black);
+  border-color: var(--md-black);
+}
+
+.md-button-secondary.md-tone-red {
+  background: transparent;
+  border-color: var(--md-red);
+  color: var(--md-red);
+}
+
+.md-button-secondary.md-tone-yellow {
+  background: transparent;
+  border-color: var(--md-yellow);
+  color: var(--md-yellow);
+}
+
+.md-button-secondary.md-tone-blue {
+  background: transparent;
+  border-color: var(--md-blue);
+  color: var(--md-blue);
+}
+
+.md-button-secondary.md-tone-white {
+  background: transparent;
+  border-color: var(--md-white);
+  color: var(--md-white);
+}
+
+.md-button-secondary.md-tone-black {
+  background: transparent;
+  border-color: var(--md-black);
+  color: var(--md-black);
+}
+
+.md-button-secondary.md-tone-default {
+  background: transparent;
+  border-color: var(--md-black);
+  color: var(--md-black);
+}
+
 .md-button-outlined {
   background: transparent;
   color: inherit;
@@ -459,4 +502,265 @@ select.md-field {
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ===== Auto-Generated Mondrian Grid ===== */
+
+.md-grid {
+  width: 100%;
+  /* 确保网格内的内容不会撑破布局 */
+  min-width: 0;
+}
+
+.md-grid-cell {
+  border: var(--md-border-width) solid var(--md-black);
+  padding: var(--md-space-md);
+  min-width: 0;
+  min-height: 0;
+  overflow: hidden;
+  overflow-wrap: break-word;
+  word-break: break-word;
+  transition: transform var(--md-motion-fast) ease;
+}
+
+.md-grid-cell:hover {
+  transform: translate(-1px, -1px);
+}
+
+.md-grid-cell-dominant {
+  border-width: var(--md-border-strong-width);
+  box-shadow: var(--md-shadow-sm);
+}
+
+/* ===== Auto-Generated Mondrian Canvas ===== */
+
+.md-canvas {
+  background: var(--md-canvas);
+  min-height: 100%;
+  padding: var(--md-space-xl);
+}
+
+/* --- 响应式：移动端网格 --- */
+@media (max-width: 480px) {
+  .md-grid-cell {
+    padding: var(--md-space-sm);
+  }
+
+  .md-canvas {
+    padding: var(--md-space-sm);
+  }
+}
+
+/* --- 响应式：平板端 --- */
+@media (max-width: 768px) {
+  .md-grid-cell {
+    padding: var(--md-space-sm);
+  }
+}
+
+/* ===== ImageViewer 图片查看器 ===== */
+
+.md-iv-card {
+  /* 继承 md-card 样式 */
+}
+
+.md-iv-zoomable {
+  cursor: pointer;
+}
+
+.md-iv-thumb-wrap {
+  position: relative;
+  overflow: hidden;
+  margin-bottom: var(--md-space-xs);
+}
+
+.md-iv-skeleton {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--md-canvas) 25%, var(--md-white) 50%, var(--md-canvas) 75%);
+  background-size: 200% 100%;
+  animation: md-shimmer 1.2s linear infinite;
+}
+
+.md-iv-thumb {
+  width: 100%;
+  display: block;
+  opacity: 0;
+  transition: opacity var(--md-motion-normal) ease;
+}
+
+.md-iv-thumb-loaded {
+  opacity: 1;
+}
+
+.md-iv-thumb:hover {
+  filter: brightness(1.05);
+}
+
+.md-iv-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 180px;
+  background: var(--md-canvas);
+  border: var(--md-border-width) dashed var(--md-black);
+  color: var(--md-black);
+  gap: var(--md-space-sm);
+}
+
+.md-iv-error-icon {
+  font-size: 2rem;
+}
+
+.md-iv-error-text {
+  font-size: 13px;
+  font-weight: 600;
+  opacity: 0.7;
+}
+
+.md-iv-caption {
+  margin: var(--md-space-xs) 0 0;
+  font-size: 13px;
+  opacity: 0.8;
+  line-height: 1.5;
+}
+
+.md-iv-lightbox-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--md-space-md);
+}
+
+.md-iv-lightbox-img-wrap {
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background: var(--md-canvas);
+}
+
+.md-iv-lightbox-img {
+  max-width: 100%;
+  display: block;
+  transition: transform var(--md-motion-normal) ease;
+}
+
+.md-iv-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--md-space-sm);
+  padding-top: var(--md-space-xs);
+  border-top: var(--md-border-width) solid var(--md-black);
+}
+
+.md-iv-scale-label {
+  font-size: 13px;
+  font-weight: 700;
+  min-width: 40px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ===== DialogWindow 对话框窗口 ===== */
+
+.md-dialog {
+  /* 模态框内的对话框包装器，继承 md-modal 样式 */
+}
+
+.md-dialog-header {
+  display: flex;
+  align-items: center;
+  gap: var(--md-space-sm);
+  margin-bottom: var(--md-space-md);
+}
+
+.md-dialog-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.md-dialog-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  flex: 1;
+}
+
+.md-dialog-body {
+  margin-bottom: var(--md-space-md);
+  line-height: 1.6;
+}
+
+.md-dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--md-space-sm);
+  padding-top: var(--md-space-md);
+  border-top: var(--md-border-width) solid var(--md-black);
+}
+
+/* --- Dialog 尺寸变体 --- */
+
+.md-dialog-sm {
+  /* 使用 inline style maxWidth 控制 */
+}
+
+.md-dialog-lg {
+  /* 使用 inline style maxWidth 控制 */
+}
+
+/* ===== ButtonList 按钮列表 ===== */
+
+.md-btn-list {
+  /* flex 布局由内联样式控制 */
+}
+
+.md-btn-icon {
+  display: inline-flex;
+  align-items: center;
+  margin-right: var(--md-space-xs);
+}
+
+.md-btn-group {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.md-btn-group-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  opacity: 0.6;
+  padding: 0 2px;
+}
+
+.md-btn-group-items {
+  display: flex;
+}
+
+/* ===== 复合组件响应式 ===== */
+
+@media (max-width: 480px) {
+  .md-dialog-footer {
+    flex-direction: column;
+  }
+
+  .md-dialog-footer .md-button {
+    width: 100%;
+  }
+
+  .md-iv-lightbox-img-wrap {
+    min-height: 140px;
+  }
+
+  .md-iv-toolbar {
+    flex-wrap: wrap;
+  }
 }

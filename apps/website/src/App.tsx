@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Button,
   Card,
@@ -118,8 +118,7 @@ function FeaturesSection() {
   );
 }
 
-function ComponentShowcase() {
-  const [switchOn, setSwitchOn] = useState(false);
+function ComponentShowcase({ darkMode, onDarkModeChange }: { darkMode: boolean; onDarkModeChange: (v: boolean) => void }) {
   const [tabKey, setTabKey] = useState('a');
   const [modalOpen, setModalOpen] = useState(false);
   const [toastOpen, setToastOpen] = useState(false);
@@ -146,6 +145,15 @@ function ComponentShowcase() {
             <Button variant="outlined" tone="black">Cancel</Button>
             <Button disabled>Disabled</Button>
           </div>
+        </div>
+
+        {/* Card */}
+        <div className="showcase-item">
+          <span className="showcase-label">Card</span>
+          <Card title="Project Alpha" subtitle="Last edited 2 days ago" tone="white">
+            <p style={{ marginBottom: 12 }}>A card with title, subtitle, body content, and a nested action button.</p>
+            <Button tone="blue" size="sm">Open Project</Button>
+          </Card>
         </div>
 
         {/* Input & Form */}
@@ -182,9 +190,12 @@ function ComponentShowcase() {
         <div className="showcase-item">
           <span className="showcase-label">Switch & Checkbox</span>
           <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
-            <Switch label="Dark mode" checked={switchOn} onCheckedChange={setSwitchOn} />
+            <Switch label="Dark mode" checked={darkMode} onCheckedChange={onDarkModeChange} />
             <Checkbox label="I agree to the terms" defaultChecked />
-            <Radio name="demo" label="Option 1" defaultChecked />
+            <div className="showcase-row">
+              <Radio name="demo" label="Option A" defaultChecked />
+              <Radio name="demo" label="Option B" />
+            </div>
           </div>
         </div>
 
@@ -226,9 +237,9 @@ function ComponentShowcase() {
         <div className="showcase-item">
           <span className="showcase-label">Avatar & Skeleton</span>
           <div className="showcase-row">
-            <Avatar name="Piet Mondrian" tone="red" size={40} />
+            <Avatar name="Piet Mondrian" tone="red" size={56} />
             <Avatar name="De Stijl" tone="blue" size={40} />
-            <Avatar tone="yellow" size={40} name="PM" />
+            <Avatar tone="yellow" size={28} name="PM" />
           </div>
           <div style={{ height: 12 }} />
           <Skeleton width={200} height={16} />
@@ -353,6 +364,18 @@ function Footer() {
 }
 
 export function App() {
+  const [darkMode, setDarkMode] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return localStorage.getItem('md-dark-mode') === 'true';
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+    document.documentElement.style.colorScheme = darkMode ? 'dark' : 'light';
+    localStorage.setItem('md-dark-mode', String(darkMode));
+  }, [darkMode]);
   return (
     <>
       <header className="site-header">
@@ -368,7 +391,7 @@ export function App() {
       <main>
         <Hero />
         <FeaturesSection />
-        <ComponentShowcase />
+        <ComponentShowcase darkMode={darkMode} onDarkModeChange={setDarkMode} />
         <QuickStartSection />
         <ThemeSection />
         <CTASection />

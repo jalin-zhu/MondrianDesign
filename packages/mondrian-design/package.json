@@ -18,6 +18,10 @@
       "import": "./dist/index.js",
       "require": "./dist/index.cjs"
     },
+    "./web-components": {
+      "import": "./dist/index.web-components.js",
+      "require": "./dist/index.web-components.global.js"
+    },
     "./styles.css": "./src/styles.css"
   },
   "sideEffects": [
